@@ -11,8 +11,10 @@ import {
   LabelStyled,
   TitleForm,
 } from "../../styles/form";
-import { DivLoginBtn, LoginBtn } from "./style";
+import { ButtonsDiv } from "./style";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { StyledButton } from "../Button/style";
+import { StyledLink } from "../Link/style";
 
 export const FormLogin = () => {
   const {
@@ -32,6 +34,7 @@ export const FormLogin = () => {
   return (
     <FormStyled onSubmit={handleSubmit(login)}>
       <TitleForm>Login</TitleForm>
+
       <InputField>
         <LabelStyled htmlFor="email">Email</LabelStyled>
 
@@ -55,11 +58,15 @@ export const FormLogin = () => {
         )}
       </InputField>
 
-      <DivLoginBtn>
-        <LoginBtn type="submit" className="loginBtn">
+      <ButtonsDiv>
+        <StyledButton type="submit" className="loginBtn">
           Entrar
-        </LoginBtn>
-      </DivLoginBtn>
+        </StyledButton>
+
+        <StyledLink to="/register" className="signUpLink">
+          Cadastre-se
+        </StyledLink>
+      </ButtonsDiv>
     </FormStyled>
   );
 };

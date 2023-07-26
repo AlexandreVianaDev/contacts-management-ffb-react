@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { DivSignUpLink } from "../../pages/Login/style";
 import { UserContext } from "../../providers/UserContext";
 import {
   ErrorStyled,
@@ -12,9 +11,10 @@ import {
 } from "../../styles/form";
 import { registerFormSchema } from "./schema";
 import { useNavigate } from "react-router-dom";
-import { SignUpBtn } from "./style";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iRegisterFormValues } from "./types";
+import { ButtonsDiv } from "../FormLogin/style";
+import { StyledButton } from "../Button/style";
 
 export const FormRegister = () => {
   const navigate = useNavigate();
@@ -42,6 +42,7 @@ export const FormRegister = () => {
   return (
     <FormStyled onSubmit={handleSubmit(createUser)}>
       <TitleForm>Cadastro</TitleForm>
+
       <InputField>
         <LabelStyled>
           Nome<span></span>
@@ -53,6 +54,7 @@ export const FormRegister = () => {
         />
         {errors.name && <ErrorStyled>{errors.name.message}</ErrorStyled>}
       </InputField>
+
       <InputField>
         <LabelStyled>
           Email<span></span>
@@ -64,6 +66,19 @@ export const FormRegister = () => {
         />
         {errors.email && <ErrorStyled>{errors.email.message}</ErrorStyled>}
       </InputField>
+
+      <InputField>
+        <LabelStyled>
+          Telefone<span></span>
+        </LabelStyled>
+        <InputStyled
+          type="text"
+          placeholder="Digite seu Telefone"
+          {...register("phone")}
+        />
+        {errors.phone && <ErrorStyled>{errors.phone.message}</ErrorStyled>}
+      </InputField>
+
       <InputField>
         <LabelStyled>
           Senha<span></span>
@@ -77,6 +92,7 @@ export const FormRegister = () => {
           <ErrorStyled>{errors.password.message}</ErrorStyled>
         )}
       </InputField>
+
       <InputField>
         <LabelStyled>
           Confirmar senha<span></span>
@@ -90,30 +106,20 @@ export const FormRegister = () => {
           <ErrorStyled>{errors.confirmPassword.message}</ErrorStyled>
         )}
       </InputField>
-      <InputField>
-        <LabelStyled>
-          Telefone<span></span>
-        </LabelStyled>
-        <InputStyled
-          type="text"
-          placeholder="Digite seu Telefone"
-          {...register("phone")}
-        />
-        {errors.phone && <ErrorStyled>{errors.phone.message}</ErrorStyled>}
-      </InputField>
 
-      <DivSignUpLink>
-        <SignUpBtn className="signUpBtn" type="submit">
+      <ButtonsDiv>
+        <StyledButton className="signUpBtn" type="submit">
           Cadastrar
-        </SignUpBtn>
-      </DivSignUpLink>
-      <span
-        onClick={() => {
-          returnBtn();
-        }}
-      >
-        Voltar
-      </span>
+        </StyledButton>
+
+        <StyledButton
+          onClick={() => {
+            returnBtn();
+          }}
+        >
+          Voltar
+        </StyledButton>
+      </ButtonsDiv>
     </FormStyled>
   );
 };
