@@ -31,7 +31,7 @@ interface iUserContext {
   updateUser: () => void;
   deleteUser: () => void;
   loading: boolean;
-  setLoading: () => boolean;
+  setLoading: (props: boolean) => void;
   usersList: iUser[] | null;
 }
 
@@ -48,13 +48,12 @@ export const UserProvider = ({ children }: iUserProvider) => {
   useEffect(() => {
     const autoLogin = () => {
       const userToken = localStorage.getItem("@TOKEN");
-      const userID = localStorage.getItem("@ID");
 
       if (userToken) {
         const userAuthorization = async () => {
           try {
             setLoading(true);
-            const response = await api.get<iUser>(`/users/${userID}`, {
+            const response = await api.get<iUser>(`/login`, {
               headers: {
                 Authorization: `Bearer ${userToken}`,
               },
@@ -90,7 +89,6 @@ export const UserProvider = ({ children }: iUserProvider) => {
         },
       });
       setUsersList(users);
-      // toast.success("Usuários localizados com sucesso!");
     } catch (error) {
       const currentError = error as AxiosError<iRequestError>;
       toast.error("Erro ao tentar recuperar a lista de usuários");
@@ -102,13 +100,14 @@ export const UserProvider = ({ children }: iUserProvider) => {
   const login: SubmitHandler<iLoginFormValues> = async (data) => {
     try {
       setLoading(true);
+      console.log(data);
       const response = await api.post("/login", data);
-      localStorage.setItem("@TOKEN", response.data.accessToken);
-      localStorage.setItem("@ID", response.data.user.id);
       setUser(response.data.user);
+      localStorage.setItem("@TOKEN", response.data.token);
       toast.success("Login feito com sucesso!");
       navigate("/dashboard");
     } catch (error) {
+      console.log(error);
       toast.error("Erro no login!");
     } finally {
       setLoading(false);
@@ -119,14 +118,13 @@ export const UserProvider = ({ children }: iUserProvider) => {
     try {
       setLoading(true);
       const response = await api.post("/users", data);
-      localStorage.setItem("@TOKEN", response.data.accessToken);
-      localStorage.setItem("@ID", response.data.user.id);
       toast.success("Cadastro feito com sucesso!");
+      navigate("/");
     } catch (error) {
       toast.error("Erro ao cadastrar");
     } finally {
       setLoading(false);
-      navigate("/");
+      // navigate("/");
     }
   };
 

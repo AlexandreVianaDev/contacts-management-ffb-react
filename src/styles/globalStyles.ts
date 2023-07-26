@@ -1,13 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-*{
+
 
     :root{
-    --color-primary: #202F5A;
-    --color-secondary: #2862A5;
-    --color-terciary: #6675A0;
-
+    --color-primary: #12232E;
+    --color-primary-shadow: #203647;
+    --color-secondary: #007CC7;
+    --color-secondary-shadow: #EEFBFB;
+    --color-terciary: #4DA8DA;
+    
     --grey-100: #FFFFFF;
     --grey-90: #D3D5D6;
     --grey-70: #8E8E8E;
@@ -20,10 +22,12 @@ export const GlobalStyle = createGlobalStyle`
     --positive-feedback: #168821;
 
 
+    --logo-mobile: 2.5rem;
+    --logo: 3rem;
     --title-1: 2rem;
 
-    --linkRegister-fontSize: 1.5rem;
-    --input-fontSize: 1.5rem;
+    --linkRegister-fontSize: 1rem;
+    --input-fontSize: 1rem;
     --body: 1.5rem;
     --headLine: 1.375rem;
     --inputText: 1rem;
@@ -58,17 +62,18 @@ time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
+	border: none;
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
     list-style: none;
 
 }
-}
+
 
 
 body{
-    background-color: var(--grey-100);
+    background-color: var(--color-terciary);
     font-family: "Inter", sans-serif;
 }
 button{
