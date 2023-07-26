@@ -7,7 +7,6 @@ import {
   useContext,
 } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
 import { iLoginFormValues } from "../components/FormLogin/types";
@@ -48,8 +47,6 @@ export const ContactProvider = ({ children }: iContactProvider) => {
 
   const { token, setLoading } = useContext(UserContext);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const getContactList = () => {
       const userToken = localStorage.getItem("@TOKEN");
@@ -66,6 +63,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
             setContactsList(response.data);
           } catch (error) {
             const currentError = error as AxiosError;
+            toast.error("Erro ao buscar lista de contatos!");
           } finally {
             setLoading(false);
           }

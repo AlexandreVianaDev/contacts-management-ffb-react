@@ -9,7 +9,7 @@ export const FormStyled = styled.form`
   border-radius: var(--radius-default);
   width: 100%;
   position: relative;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 
   @media (min-width: 500px) {
     gap: 32px;
@@ -56,11 +56,13 @@ export const InputField = styled.div`
     max-height: 20px;
   }
 `;
+
 export const ErrorStyled = styled.p`
   display: flex;
   align-items: center;
   color: var(--negative-feedback);
 `;
+
 export const LabelStyled = styled.label`
   display: flex;
   align-items: center;

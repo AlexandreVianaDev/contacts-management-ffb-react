@@ -1,40 +1,23 @@
 import styled from "styled-components";
 
-export const DivLoginBtn = styled.div`
-  cursor: pointer;
-  padding: 20px 20px;
-  border-radius: var(--radius-default);
-  width: 70%;
-  max-width: 410px;
+export const ButtonsDiv = styled.div`
+  width: 85%;
   display: flex;
-  justify-content: center;
-  background-color: var(--grey-70);
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
 
-  &:hover {
-    transition: 0.6s;
-    background-color: var(--color-primary);
-  }
-  &:hover .loginBtn {
-    transition: 0.6s;
-    background-color: var(--color-primary);
+  > button {
+    width: 100%;
   }
 
   @media (min-width: 500px) {
-    width: 60%;
-  }
-`;
+    width: 65%;
+    flex-direction: row;
 
-export const LoginBtn = styled.button`
-  background-color: var(--grey-70);
-  color: var(--grey-100);
-  border: none;
-  border-radius: var(--radius-default);
-  font-size: var(--input-fontSize);
-  width: 100%;
-  height: 100%;
-  outline: none;
-
-  &:hover {
-    background-color: var(--grey-20);
+    > div {
+      width: 90%;
+    }
   }
 `;
