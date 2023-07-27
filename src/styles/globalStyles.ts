@@ -44,6 +44,8 @@ export const GlobalStyle = createGlobalStyle`
 
     --radius-default: 8px;
 
+    --container-1: 1000px;
+
     }
 
 html, body, div, span, applet, object, iframe,

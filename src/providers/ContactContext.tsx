@@ -17,7 +17,7 @@ interface iContactProvider {
 }
 
 export interface iContact {
-  id: number | undefined;
+  id: number;
   name: string;
   email: string;
   phone: string;
@@ -32,7 +32,7 @@ export interface iContactWithoutId {
 interface iContactContext {
   contactsList: iContact[] | null | undefined;
   createContact: (props: iContactWithoutId) => void;
-  updateContact: (props: iContactWithoutId, id: number) => void;
+  updateContact: (data: iContactWithoutId, contactId: number) => void;
   deleteContact: (id: number) => void;
 }
 
@@ -97,7 +97,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
   ) => {
     try {
       setLoading(true);
-      const response = await api.patch("/contacts", data, {
+      const response = await api.patch(`/contacts/${contactId}`, data, {
         headers: {
           Authorization: `Bearer: ${token}`,
         },
@@ -118,7 +118,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
     const token = localStorage.getItem("@TOKEN");
     try {
       setLoading(true);
-      await api.delete(`/contacts/${id}`, {
+      await api.delete(`/contacts/${contactId}`, {
         headers: {
           Authorization: `Bearer: ${token}`,
         },
