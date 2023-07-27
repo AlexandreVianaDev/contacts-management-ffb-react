@@ -12,6 +12,9 @@ export const AppRoutes = () => {
       <Route path="/dashboard" element={<ProtectedRoutes />}>
         <Route index element={<Dashboard />} />
       </Route>
+      <Route path="/dashboard/:subpage" element={<ProtectedRoutes />}>
+        <Route index element={<Dashboard />} />
+      </Route>
     </Routes>
   );
 };

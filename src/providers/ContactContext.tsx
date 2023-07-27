@@ -34,6 +34,12 @@ interface iContactContext {
   createContact: (props: iContactWithoutId) => void;
   updateContact: (data: iContactWithoutId, contactId: number) => void;
   deleteContact: (id: number) => void;
+  modalIsOpen: boolean;
+  setModalIsOpen: (props: boolean) => void;
+  modal: string;
+  setModal: (props: string) => void;
+  setContactEdit: (props: number) => void;
+  contactEdit: iContact;
 }
 
 export const ContactContext = createContext<iContactContext>(
@@ -44,6 +50,10 @@ export const ContactProvider = ({ children }: iContactProvider) => {
   const [contactsList, setContactsList] = useState<
     iContact[] | null | undefined
   >(null);
+
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [modal, setModal] = useState<string>("");
+  const [contactEdit, setContactEdit] = useState<iContact | null>(null);
 
   const { token, setLoading } = useContext(UserContext);
 
@@ -95,6 +105,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
     data,
     contactId
   ) => {
+    const token = localStorage.getItem("@TOKEN");
     try {
       setLoading(true);
       const response = await api.patch(`/contacts/${contactId}`, data, {
@@ -143,6 +154,12 @@ export const ContactProvider = ({ children }: iContactProvider) => {
         createContact,
         updateContact,
         deleteContact,
+        modalIsOpen,
+        setModalIsOpen,
+        modal,
+        setModal,
+        contactEdit,
+        setContactEdit,
       }}
     >
       {children}

@@ -4,9 +4,14 @@ import { Loader } from "../../components/Loader";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
 import Logo from "../../components/Logo";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const { loading } = useContext(UserContext);
+  const { loading, user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  user && navigate("/dashboard");
 
   return (
     <MainContainer>

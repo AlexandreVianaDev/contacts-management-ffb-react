@@ -8,6 +8,7 @@ import {
   ContainerLogout,
   ContainerTop,
   ContainerUserInfo,
+  StyledLinkHeader,
 } from "./style";
 import { UserContext } from "../../providers/UserContext";
 import Logo from "../Logo";
@@ -42,9 +43,21 @@ export const Header = () => {
       <ContainerBot>
         <StyledContainer>
           <ul>
-            <li>Contacts</li>
-            <li>Profile</li>
-            <li>All Users</li>
+            <li>
+              <StyledLinkHeader to="/dashboard/contacts">
+                Contatos
+              </StyledLinkHeader>
+            </li>
+            <li>
+              <StyledLinkHeader to="/dashboard/profile">
+                Perfil
+              </StyledLinkHeader>
+            </li>
+            <li>
+              <StyledLinkHeader to="/dashboard/allusers">
+                Todos os Usuários
+              </StyledLinkHeader>
+            </li>
           </ul>
         </StyledContainer>
       </ContainerBot>

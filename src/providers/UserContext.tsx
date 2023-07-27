@@ -14,7 +14,7 @@ interface iUserProvider {
 }
 
 export interface iUser {
-  id: number | undefined;
+  id: number;
   name: string;
   email: string;
   phone: string;
@@ -28,8 +28,8 @@ interface iUserContext {
   login: SubmitHandler<iLoginFormValues>;
   createUser: SubmitHandler<iRegisterFormValues>;
   handleLogout: () => void;
-  updateUser: () => void;
-  deleteUser: () => void;
+  updateUser: (data: iUser, id: number) => void;
+  deleteUser: (id: number) => void;
   loading: boolean;
   setLoading: (props: boolean) => void;
   usersList: iUser[] | null;
@@ -58,9 +58,10 @@ export const UserProvider = ({ children }: iUserProvider) => {
                 Authorization: `Bearer ${userToken}`,
               },
             });
+            setToken(userToken);
             setUser(response.data);
             getUsersList();
-            navigate("/dashboard");
+            // navigate("/dashboard");
           } catch (error) {
             const currentError = error as AxiosError;
           } finally {
@@ -83,12 +84,12 @@ export const UserProvider = ({ children }: iUserProvider) => {
 
     try {
       setLoading(true);
-      const users = await api.get<iUser[]>(`/users`, {
+      const response = await api.get<iUser[]>(`/users`, {
         headers: {
           Authorization: `Bearer ${tokenLS}`,
         },
       });
-      setUsersList(users);
+      setUsersList(response.data);
     } catch (error) {
       const currentError = error as AxiosError<iRequestError>;
       toast.error("Erro ao tentar recuperar a lista de usuários");
@@ -128,10 +129,10 @@ export const UserProvider = ({ children }: iUserProvider) => {
     }
   };
 
-  const updateUser: SubmitHandler<iUser> = async (data) => {
+  const updateUser: SubmitHandler<iUser> = async (data, id) => {
     try {
       setLoading(true);
-      const response = await api.patch("/users", data, {
+      const response = await api.patch(`/users/${id}`, data, {
         headers: {
           Authorization: `Bearer: ${token}`,
         },
@@ -142,7 +143,7 @@ export const UserProvider = ({ children }: iUserProvider) => {
       toast.error("Erro ao atualizar o perfil!");
     } finally {
       setLoading(false);
-      navigate("/");
+      // navigate("/");
     }
   };
 
@@ -162,6 +163,8 @@ export const UserProvider = ({ children }: iUserProvider) => {
       toast.error("Erro ao deletar conta!");
     } finally {
       setLoading(false);
+      localStorage.clear();
+      navigate("/");
     }
   };
 

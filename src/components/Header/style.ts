@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const ContainerHeader = styled.header`
@@ -96,4 +97,13 @@ export const ContainerUserInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+`;
+
+export const StyledLinkHeader = styled(Link)`
+  text-decoration: none;
+  color: white;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
