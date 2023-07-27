@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 export const StyledCard = styled.li`
+  min-width: 150px;
   background-color: var(--grey-90);
   border-radius: var(--radius-default);
   padding: 16px;
@@ -15,4 +16,8 @@ export const StyledCard = styled.li`
     display: flex;
     justify-content: space-between;
   }
+`;
+
+export const StyledCardName = styled.li`
+  font-weight: var(--Bold);
 `;
