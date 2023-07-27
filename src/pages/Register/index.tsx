@@ -4,9 +4,14 @@ import { Loader } from "../../components/Loader";
 import { UserContext } from "../../providers/UserContext";
 import { DivForm, MainContainer } from "../Login/style";
 import Logo from "../../components/Logo";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const { loading } = useContext(UserContext);
+  const { loading, user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  user && navigate("/dashboard");
 
   return (
     <MainContainer>

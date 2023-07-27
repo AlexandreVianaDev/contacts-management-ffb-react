@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import { StyledCardList } from "./style";
 
-export interface iChildren {
+export interface iCardListProps {
   children: ReactNode;
 }
 
-const CardList = ({ children }: iChildren) => {
+const CardList = ({ children }: iCardListProps) => {
   return <StyledCardList>{children}</StyledCardList>;
 };
 
