@@ -5,9 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { iLoginFormValues } from "../components/FormLogin/types";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
-// import { z } from "zod";
 import { iRegisterFormValues } from "../components/FormRegister/types";
-import { iRequestError } from "../services/types";
 
 interface iUserProvider {
   children: ReactNode;
@@ -21,6 +19,18 @@ export interface iUser {
   password: string;
 }
 
+export interface iUserWithoutId {
+  name: string;
+  email: string;
+  phone: string;
+}
+
+export interface iUserEditData {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 interface iUserContext {
   token: string | null;
   user: iUser | null;
@@ -28,11 +38,12 @@ interface iUserContext {
   login: SubmitHandler<iLoginFormValues>;
   createUser: SubmitHandler<iRegisterFormValues>;
   handleLogout: () => void;
-  updateUser: (data: iUser, id: number) => void;
+  updateUser: (data: iUserWithoutId, id: number) => void;
   deleteUser: (id: number) => void;
   loading: boolean;
   setLoading: (props: boolean) => void;
   usersList: iUser[] | null;
+  getUsersList: () => void;
 }
 
 export const UserContext = createContext<iUserContext>({} as iUserContext);
@@ -60,10 +71,9 @@ export const UserProvider = ({ children }: iUserProvider) => {
             });
             setToken(userToken);
             setUser(response.data);
-            getUsersList();
-            // navigate("/dashboard");
           } catch (error) {
             const currentError = error as AxiosError;
+            console.log(currentError);
           } finally {
             setLoading(false);
           }
@@ -91,7 +101,6 @@ export const UserProvider = ({ children }: iUserProvider) => {
       });
       setUsersList(response.data);
     } catch (error) {
-      const currentError = error as AxiosError<iRequestError>;
       toast.error("Erro ao tentar recuperar a lista de usuários");
     } finally {
       setLoading(false);
@@ -101,7 +110,6 @@ export const UserProvider = ({ children }: iUserProvider) => {
   const login: SubmitHandler<iLoginFormValues> = async (data) => {
     try {
       setLoading(true);
-      console.log(data);
       const response = await api.post("/login", data);
       setUser(response.data.user);
       localStorage.setItem("@TOKEN", response.data.token);
@@ -109,27 +117,26 @@ export const UserProvider = ({ children }: iUserProvider) => {
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
-      toast.error("Erro no login!");
+      toast.error("Usuário ou senha incorretos!");
     } finally {
       setLoading(false);
     }
   };
 
-  const createUser: SubmitHandler<iRegisterFormValues> = async (data) => {
+  const createUser = async (data: iUserWithoutId) => {
     try {
       setLoading(true);
-      const response = await api.post("/users", data);
+      await api.post("/users", data);
       toast.success("Cadastro feito com sucesso!");
       navigate("/");
     } catch (error) {
       toast.error("Erro ao cadastrar");
     } finally {
       setLoading(false);
-      // navigate("/");
     }
   };
 
-  const updateUser: SubmitHandler<iUser> = async (data, id) => {
+  const updateUser = async (data: iUserEditData, id: number) => {
     try {
       setLoading(true);
       const response = await api.patch(`/users/${id}`, data, {
@@ -140,14 +147,13 @@ export const UserProvider = ({ children }: iUserProvider) => {
       setUser(response.data);
       toast.success("Perfil atualizado feito com sucesso!");
     } catch (error) {
-      toast.error("Erro ao atualizar o perfil!");
+      toast.error("E-mail já existe");
     } finally {
       setLoading(false);
-      // navigate("/");
     }
   };
 
-  const deleteUser = async (id: number | undefined) => {
+  const deleteUser = async (id: number) => {
     const teacherToken = localStorage.getItem("@TOKEN");
 
     try {
@@ -177,6 +183,7 @@ export const UserProvider = ({ children }: iUserProvider) => {
         createUser,
         updateUser,
         deleteUser,
+        getUsersList,
         handleLogout,
         token,
         loading,

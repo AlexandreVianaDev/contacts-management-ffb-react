@@ -8,11 +8,6 @@ export const ContainerHeader = styled.header`
   flex-direction: column;
   justify-content: center;
   color: var(--grey-100);
-
-  @media (min-width: 769px) {
-    /* flex-direction: row; */
-    /* justify-content: space-between; */
-  }
 `;
 
 export const ContainerTop = styled.section`
@@ -30,20 +25,20 @@ export const ContainerTop = styled.section`
 `;
 
 export const ContainerBot = styled.section`
-  /* background-color: var(--color-primary); */
+  background-color: var(--color-primary);
   width: 100%;
 
   > div > ul {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 20px 0;
   }
 `;
 
 export const ContainerLogo = styled.div`
   padding: 4px 0;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   width: 100%;
 
@@ -68,18 +63,7 @@ export const ContainerControl = styled.div`
   }
 `;
 
-export const MenuIconStyled = styled.img`
-  width: 71px;
-  height: 71px;
-
-  @media (min-width: 769px) {
-    position: absolute;
-    left: 5%;
-  }
-`;
-
 export const ContainerLogout = styled.div`
-  /* background-color: var(--color-terciary); */
   display: flex;
   justify-content: center;
   padding: 12px 0;
@@ -105,5 +89,6 @@ export const StyledLinkHeader = styled(Link)`
 
   :hover {
     cursor: pointer;
+    font-weight: var(--Bold);
   }
 `;

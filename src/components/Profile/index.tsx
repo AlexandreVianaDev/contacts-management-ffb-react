@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ContactContext, iContact } from "../../providers/ContactContext";
 import { StyledSmallButton } from "../Buttons/style";
-import { StyledCard, StyledCardName } from "./style";
+import { StyledCardProfile, StyledCardProfileName } from "./style";
 import { UserContext, iUser } from "../../providers/UserContext";
 
 export interface iCardProps {
@@ -9,7 +9,7 @@ export interface iCardProps {
   type: string;
 }
 
-const Card = ({ contact, type }: iCardProps) => {
+const Profile = ({ contact, type }: iCardProps) => {
   const { deleteContact, setModal, setContactEdit } =
     useContext(ContactContext);
 
@@ -28,9 +28,9 @@ const Card = ({ contact, type }: iCardProps) => {
 
   return (
     <>
-      <StyledCard>
+      <StyledCardProfile>
         <ul>
-          <StyledCardName>{contact.name}</StyledCardName>
+          <StyledCardProfileName>{contact.name}</StyledCardProfileName>
           <li>{contact.email}</li>
           <li>{contact.phone}</li>
           {type === "contact" && (
@@ -58,9 +58,9 @@ const Card = ({ contact, type }: iCardProps) => {
             </li>
           )}
         </ul>
-      </StyledCard>
+      </StyledCardProfile>
     </>
   );
 };
 
-export default Card;
+export default Profile;

@@ -11,6 +11,7 @@ export const StyledLoader = styled.div`
   top: 0;
   left: 0;
   margin: 0 auto;
+  z-index: 100;
 
   .lds-dual-ring {
     display: inline-block;

@@ -4,16 +4,16 @@ import { loginFormSchema } from "./schema";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
 import {
+  ButtonsDiv,
   ErrorStyled,
   FormStyled,
   InputField,
   InputStyled,
   LabelStyled,
   TitleForm,
-} from "../../styles/form";
-import { ButtonsDiv } from "./style";
+} from "../Forms/style";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StyledButton } from "../Button/style";
+import { StyledButton } from "../Buttons/style";
 import { StyledLink } from "../Link/style";
 
 export const FormLogin = () => {

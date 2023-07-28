@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import {
   createContext,
   ReactNode,
@@ -6,10 +5,8 @@ import {
   useState,
   useContext,
 } from "react";
-import { SubmitHandler } from "react-hook-form";
 import { api } from "../services/api";
 import { toast } from "react-toastify";
-import { iLoginFormValues } from "../components/FormLogin/types";
 import { UserContext } from "./UserContext";
 
 interface iContactProvider {
@@ -30,16 +27,14 @@ export interface iContactWithoutId {
 }
 
 interface iContactContext {
-  contactsList: iContact[] | null | undefined;
-  createContact: (props: iContactWithoutId) => void;
+  contactsList: iContact[];
+  createContact: (data: iContactWithoutId) => void;
   updateContact: (data: iContactWithoutId, contactId: number) => void;
-  deleteContact: (id: number) => void;
-  modalIsOpen: boolean;
-  setModalIsOpen: (props: boolean) => void;
+  deleteContact: (contactId: number) => void;
   modal: string;
   setModal: (props: string) => void;
-  setContactEdit: (props: number) => void;
-  contactEdit: iContact;
+  setContactEdit: (props: iContact) => void;
+  contactEdit: iContact | null;
 }
 
 export const ContactContext = createContext<iContactContext>(
@@ -47,15 +42,13 @@ export const ContactContext = createContext<iContactContext>(
 );
 
 export const ContactProvider = ({ children }: iContactProvider) => {
-  const [contactsList, setContactsList] = useState<
-    iContact[] | null | undefined
-  >(null);
-
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [contactsList, setContactsList] = useState<iContact[]>(
+    [] as iContact[]
+  );
   const [modal, setModal] = useState<string>("");
   const [contactEdit, setContactEdit] = useState<iContact | null>(null);
 
-  const { token, setLoading } = useContext(UserContext);
+  const { user, setLoading } = useContext(UserContext);
 
   useEffect(() => {
     const getContactList = () => {
@@ -72,7 +65,6 @@ export const ContactProvider = ({ children }: iContactProvider) => {
             });
             setContactsList(response.data);
           } catch (error) {
-            const currentError = error as AxiosError;
             toast.error("Erro ao buscar lista de contatos!");
           } finally {
             setLoading(false);
@@ -82,17 +74,19 @@ export const ContactProvider = ({ children }: iContactProvider) => {
       }
     };
     getContactList();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  const createContact: SubmitHandler<iLoginFormValues> = async (data) => {
+  const createContact = async (data: iContactWithoutId) => {
+    const token = localStorage.getItem("@TOKEN");
     try {
       setLoading(true);
-      const response = await api.post<iContact | null>("/contacts", data, {
+      const response = await api.post<iContact>("/contacts", data, {
         headers: {
           Authorization: `Bearer: ${token}`,
         },
       });
-      setContactsList([...contactsList, response.data]);
+      setContactsList([response.data, ...contactsList]);
       toast.success("Contato criado com sucesso!");
     } catch (error) {
       toast.error("Erro ao criar contato!");
@@ -101,10 +95,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
     }
   };
 
-  const updateContact: SubmitHandler<iLoginFormValues> = async (
-    data,
-    contactId
-  ) => {
+  const updateContact = async (data: iContactWithoutId, contactId: number) => {
     const token = localStorage.getItem("@TOKEN");
     try {
       setLoading(true);
@@ -116,7 +107,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
       const contactsFiltred = contactsList?.filter(
         (contact) => contact.id !== contactId
       );
-      setContactsList([...contactsFiltred, response.data]);
+      setContactsList([response.data, ...contactsFiltred]);
       toast.success("Contato atualizado com sucesso!");
     } catch (error) {
       toast.error("Erro ao atualizar contato!");
@@ -125,7 +116,7 @@ export const ContactProvider = ({ children }: iContactProvider) => {
     }
   };
 
-  const deleteContact = async (contactId: number | undefined) => {
+  const deleteContact = async (contactId: number) => {
     const token = localStorage.getItem("@TOKEN");
     try {
       setLoading(true);
@@ -154,8 +145,6 @@ export const ContactProvider = ({ children }: iContactProvider) => {
         createContact,
         updateContact,
         deleteContact,
-        modalIsOpen,
-        setModalIsOpen,
         modal,
         setModal,
         contactEdit,
