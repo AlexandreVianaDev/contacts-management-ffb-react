@@ -8,4 +8,4 @@
 - executar o comando para inicializar o React: npm run dev e acessar o link que irá aparecer
 - Obs.: lembre-se de ligar o servidor.
 
-GitHub do BackEnd: https://github.com/AlexandreVianaDev/shopper-backend
+GitHub do BackEnd: https://github.com/AlexandreVianaDev/contacts-management-bff-node
