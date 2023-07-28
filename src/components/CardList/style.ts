@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 
 export const StyledCardList = styled.ul`
-  /* background-color: var(--grey-70); */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

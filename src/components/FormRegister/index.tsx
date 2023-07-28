@@ -2,19 +2,19 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { UserContext } from "../../providers/UserContext";
 import {
+  ButtonsDiv,
   ErrorStyled,
   FormStyled,
   InputField,
   InputStyled,
   LabelStyled,
   TitleForm,
-} from "../../styles/form";
+} from "../Forms/style";
 import { registerFormSchema } from "./schema";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iRegisterFormValues } from "./types";
-import { ButtonsDiv } from "../FormLogin/style";
-import { StyledButton } from "../Button/style";
+import { StyledButton } from "../Buttons/style";
 
 export const FormRegister = () => {
   const navigate = useNavigate();

@@ -1,13 +1,13 @@
 import { FormLogin } from "../../components/FormLogin";
-import { DivForm, MainContainer } from "./style";
-import { Loader } from "../../components/Loader";
+import { MainContainer } from "./style";
 import { useContext } from "react";
 import { UserContext } from "../../providers/UserContext";
 import Logo from "../../components/Logo";
 import { useNavigate } from "react-router-dom";
+import { DivForm } from "../../components/Forms/style";
 
 export const Login = () => {
-  const { loading, user } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -15,7 +15,6 @@ export const Login = () => {
 
   return (
     <MainContainer>
-      {loading ? <Loader /> : null}
       <Logo />
       <DivForm>
         <FormLogin />
