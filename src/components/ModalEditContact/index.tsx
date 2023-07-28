@@ -1,45 +1,45 @@
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Modal from "../Modal";
 import { ContactContext } from "../../providers/ContactContext";
 import { zodResolver } from "@hookform/resolvers/zod";
 import formEditContactSchema from "./schema";
-import { StyledButton } from "../Button/style";
+import { StyledButton } from "../Buttons/style";
 import {
+  DivForm,
   ErrorStyled,
   FormStyled,
   InputField,
   InputStyled,
   LabelStyled,
   TitleForm,
-} from "../../styles/form";
-import { DivForm } from "../../pages/Login/style";
+} from "../Forms/style";
+import { iEditContact } from "./types";
 
 export const ModalEditContact = () => {
-  const { modal, setModal, contactEdit, updateContact } =
-    useContext(ContactContext);
+  const { setModal, contactEdit, updateContact } = useContext(ContactContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iEditContact>({
     resolver: zodResolver(formEditContactSchema),
     defaultValues: {
-      name: contactEdit.name,
-      email: contactEdit.email,
-      phone: contactEdit.phone,
+      name: contactEdit?.name,
+      email: contactEdit?.email,
+      phone: contactEdit?.phone,
     },
   });
 
   const handleCloseModal = () => {
     setModal("");
-    setModalIsOpen(false);
   };
 
-  const handleEditContact = (data, id) => {
-    console.log(contactEdit);
-    updateContact(data, contactEdit.id);
+  const handleEditContact: SubmitHandler<iEditContact> = (data) => {
+    if (contactEdit) {
+      updateContact(data, contactEdit?.id);
+    }
     handleCloseModal();
   };
 

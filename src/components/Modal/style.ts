@@ -1,21 +1,23 @@
 import styled from "styled-components";
 
 const StyledModal = styled.dialog`
+  width: 100vw;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
   position: absolute;
   top: 0;
   margin: 0 auto;
   background: rgba(18, 18, 20, 0.5);
+  border: 0;
+  padding: 0;
 
   > div {
-    background-color: var(--grey-90);
+    background-color: var(--grey-95);
     border-radius: var(--radius-default);
-    width: 100%;
+    width: 90%;
     max-width: 90vw;
     display: flex;
     flex-direction: column;
@@ -38,14 +40,11 @@ const StyledModal = styled.dialog`
   }
 
   .modal__closeBtn {
-    font-size: var(--font-1);
+    font-size: var(--title-1);
     color: var(--color-grey-1);
-    border: 2px solid black;
-    padding: 3px 8px;
-    border-radius: 360px;
     position: absolute;
-    top: 8px;
-    right: 24px;
+    top: 0;
+    right: 28px;
   }
 
   .modal__closeBtn:hover {
@@ -64,7 +63,7 @@ const StyledModal = styled.dialog`
 
   @media screen and (min-width: 400px) {
     > div {
-      max-width: 369px;
+      max-width: 400px;
     }
   }
 `;

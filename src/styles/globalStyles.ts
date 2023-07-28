@@ -4,13 +4,14 @@ export const GlobalStyle = createGlobalStyle`
 
 
     :root{
-    --color-primary: #12232E;
+    --color-primary: #00599A;
     --color-primary-shadow: #203647;
     --color-secondary: #007CC7;
     --color-secondary-shadow: #EEFBFB;
     --color-terciary: #4DA8DA;
     
     --grey-100: #FFFFFF;
+    --grey-95: #E4E4E4;
     --grey-90: #D3D5D6;
     --grey-70: #8E8E8E;
     --grey-50: rgba(0,0,0,0.5);

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { Header } from "../../components/Header";
-import { Loader } from "../../components/Loader";
 import { UserContext } from "../../providers/UserContext";
 import { ContactContext } from "../../providers/ContactContext";
 import Card from "../../components/Card";
@@ -9,17 +8,22 @@ import { StyledContainer } from "../../styles/container";
 import { useParams } from "react-router-dom";
 import { ModalCreateContact } from "../../components/ModalCreateContact";
 import { ModalEditContact } from "../../components/ModalEditContact";
-import { StyledButton } from "../../components/Button/style";
+import { StyledIconButton } from "../../components/Buttons/style";
 import { ModalEditUser } from "../../components/ModalEditUser";
+import Profile from "../../components/Profile";
 
 export const Dashboard = () => {
-  const { loading, usersList, user } = useContext(UserContext);
-  const { contactsList, modal, setModal, setModalIsOpen } =
-    useContext(ContactContext);
+  const { usersList, user, getUsersList } = useContext(UserContext);
+  const { contactsList, modal, setModal } = useContext(ContactContext);
 
   const [render, setRender] = useState<string | null>("contacts");
 
   const { subpage } = useParams();
+
+  useEffect(() => {
+    getUsersList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     subpage && setRender(subpage);
@@ -27,19 +31,17 @@ export const Dashboard = () => {
 
   const handleOpenModalCreateContact = () => {
     setModal("createContact");
-    setModalIsOpen(true);
   };
 
   return (
     <>
-      {loading ? <Loader /> : null}
       <Header />
       <StyledContainer>
         {render === "contacts" && (
           <div>
-            <StyledButton onClick={handleOpenModalCreateContact}>
+            <StyledIconButton onClick={handleOpenModalCreateContact}>
               +
-            </StyledButton>
+            </StyledIconButton>
           </div>
         )}
         <CardList>
@@ -57,8 +59,9 @@ export const Dashboard = () => {
               <Card key={contact.id} type="user" contact={contact} />
             ))}
 
+          {/* profile */}
           {render === "profile" && user && (
-            <Card type="profile" key={user?.id} contact={user} />
+            <Profile type="profile" key={user?.id} contact={user} />
           )}
         </CardList>
       </StyledContainer>

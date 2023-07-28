@@ -1,5 +1,27 @@
 import styled from "styled-components";
 
+export const DivForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--grey-90);
+  width: 80%;
+  max-width: 600px;
+  border-radius: var(--radius-default);
+  padding: 40px 0;
+
+  p {
+    text-align: center;
+    font-size: var(--text-2);
+    font-weight: var(--Regular);
+  }
+
+  @media (min-width: 800px) {
+    width: 50%;
+  }
+`;
+
 export const FormStyled = styled.form`
   display: flex;
   flex-direction: column;
@@ -9,7 +31,6 @@ export const FormStyled = styled.form`
   border-radius: var(--radius-default);
   width: 100%;
   position: relative;
-  /* padding-bottom: 20px; */
 
   @media (min-width: 500px) {
     gap: 32px;
@@ -33,6 +54,7 @@ export const TitleForm = styled.h1`
   font-size: var(--title-1);
   font-weight: var(--Bold);
   padding-bottom: 12px;
+  text-align: center;
 `;
 
 export const InputField = styled.div`
@@ -52,7 +74,7 @@ export const InputField = styled.div`
 
   @media (min-width: 500px) {
     padding: 22px 18px;
-    width: 60%;
+    width: 80%;
     max-height: 20px;
   }
 `;
@@ -98,6 +120,28 @@ export const InputStyled = styled.input`
       bottom: 0;
       font-size: var(--inputText);
       font-weight: var(--Regular);
+    }
+  }
+`;
+
+export const ButtonsDiv = styled.div`
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+
+  > button {
+    width: 100%;
+  }
+
+  @media (min-width: 500px) {
+    /* width: 90%; */
+    flex-direction: row;
+
+    > div {
+      width: 90%;
     }
   }
 `;

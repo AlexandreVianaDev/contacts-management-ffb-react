@@ -1,24 +1,25 @@
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Modal from "../Modal";
 import { ContactContext } from "../../providers/ContactContext";
 import { zodResolver } from "@hookform/resolvers/zod";
-import formEditContactSchema from "./schema";
-import { StyledButton } from "../Button/style";
+import { StyledButton } from "../Buttons/style";
 import {
+  DivForm,
   ErrorStyled,
   FormStyled,
   InputField,
   InputStyled,
   LabelStyled,
   TitleForm,
-} from "../../styles/form";
-import { DivForm } from "../../pages/Login/style";
+} from "../Forms/style";
+
 import { UserContext } from "../../providers/UserContext";
+import formEditUserSchema from "./schema";
+import { iEditUser } from "./types";
 
 export const ModalEditUser = () => {
-  const { modal, setModal, contactEdit, updateContact } =
-    useContext(ContactContext);
+  const { setModal } = useContext(ContactContext);
 
   const { user, updateUser } = useContext(UserContext);
 
@@ -26,8 +27,8 @@ export const ModalEditUser = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(formEditContactSchema),
+  } = useForm<iEditUser>({
+    resolver: zodResolver(formEditUserSchema),
     defaultValues: {
       name: user?.name,
       email: user?.email,
@@ -37,10 +38,9 @@ export const ModalEditUser = () => {
 
   const handleCloseModal = () => {
     setModal("");
-    setModalIsOpen(false);
   };
 
-  const handleEditUser = (data) => {
+  const handleEditUser: SubmitHandler<iEditUser> = (data) => {
     updateUser(data, user!.id);
     handleCloseModal();
   };
@@ -90,6 +90,7 @@ export const ModalEditUser = () => {
                 <ErrorStyled>{errors.phone.message}</ErrorStyled>
               )}
             </InputField>
+
             <StyledButton>Atualizar</StyledButton>
           </FormStyled>
         </DivForm>

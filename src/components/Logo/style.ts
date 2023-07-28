@@ -13,6 +13,5 @@ export const StyledLogo = styled.h1`
 
   @media (min-width: 600px) {
     text-align: left;
-    /* font-size: var(--logo); */
   }
 `;
