@@ -137,7 +137,7 @@ export const ButtonsDiv = styled.div`
   }
 
   @media (min-width: 500px) {
-    /* width: 90%; */
+    width: 75%;
     flex-direction: row;
 
     > div {

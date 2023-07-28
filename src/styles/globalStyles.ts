@@ -70,7 +70,6 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
     list-style: none;
-
 }
 
 
